@@ -60,5 +60,16 @@ services:
     ports:
       - 6380:6379
     command: redis-server /usr/local/etc/redis/redis.conf
+  mongo50:
+    image: mongo:5.0.10
+    volumes:
+      - ./services/mongo50/mongod.conf.orig:/etc/mongod.conf.orig
+      - ./data/mongo50/:/data/db/
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "admin"
+      MONGO_INITDB_ROOT_PASSWORD: "auth123"
+    command: --auth
 
 
