@@ -9,6 +9,18 @@ services:
       - ./www/:/var/www/
     ports:
       - 80:80
+    depends_on:
+      - php74
+    environment:
+      - TZ=Asia/Shanghai
+  php74:
+    build:
+      context: ./services/php74
+    volumes:
+      - ./services/php74/php.ini:/usr/local/etc/php/php.ini
+      - ./services/php74/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      - ./logs/php74/:/var/log/php/
+      - ./www/:/var/www/
     environment:
       - TZ=Asia/Shanghai
 

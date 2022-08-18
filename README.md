@@ -21,5 +21,28 @@ docker-compose up
 
 127.0.0.1
 
+## PHP74
+
+1.拷贝容器内配置文件到宿主机
+
+```bash
+docker run -it --rm --name temp-php php:7.4.30-fpm-bullseye /bin/bash
+mkdir ./services/php74
+docker cp temp-php:/usr/local/etc/php-fpm.conf ./services/php74/php-fpm.conf
+docker cp temp-php:/usr/local/etc/php/php.ini-development ./services/php74/
+docker cp temp-php:/usr/local/etc/php/php.ini-production ./services/php74/
+cp services/php74/php.ini-development services/php74/php.ini
+```
+
+2.启动容器
+
+```bash
+docker-compose up
+```
+
+3.浏览器中访问
+
+127.0.0.1
+
 
 
