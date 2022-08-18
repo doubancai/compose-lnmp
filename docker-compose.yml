@@ -32,6 +32,8 @@ services:
       - ./services/php81/php-fpm.conf:/usr/local/etc/php-fpm.conf
       - ./logs/php81/:/var/log/php/
       - ./www/:/var/www/
+    environment:
+      - TZ=Asia/Shanghai
   mysql80:
     image: mysql:8.0.30
     volumes:
@@ -42,6 +44,7 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     environment:
       - MYSQL_ROOT_PASSWORD=root
+      - TZ=Asia/Shanghai
     security_opt:
       - seccomp:unconfined
   redis62:
@@ -51,6 +54,8 @@ services:
       - ./data/redis62/:/data/:rw
     ports:
       - 6379:6379
+    environment:
+      - TZ=Asia/Shanghai
     command: redis-server /usr/local/etc/redis/redis.conf
   redis70:
     image: redis:7.0.4-bullseye
@@ -59,6 +64,8 @@ services:
       - ./data/redis70/:/data/:rw
     ports:
       - 6380:6379
+    environment:
+      - TZ=Asia/Shanghai
     command: redis-server /usr/local/etc/redis/redis.conf
   mongo50:
     image: mongo:5.0.10
@@ -68,8 +75,9 @@ services:
     ports:
       - 27017:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: "admin"
-      MONGO_INITDB_ROOT_PASSWORD: "auth123"
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=auth123
+      - TZ=Asia/Shanghai
     command: --auth
   openresty121:
     build:
@@ -81,6 +89,8 @@ services:
       - ./www/:/var/www/
     ports:
       - 8080:80
+    environment:
+      - TZ=Asia/Shanghai
   redis-cluster:
     image: redis:6.2.7-bullseye
     volumes:
