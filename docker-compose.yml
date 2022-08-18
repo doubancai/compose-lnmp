@@ -44,5 +44,21 @@ services:
       - MYSQL_ROOT_PASSWORD=root
     security_opt:
       - seccomp:unconfined
+  redis62:
+    image: redis:6.2.7-bullseye
+    volumes:
+      - ./services/redis62/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./data/redis62/:/data/:rw
+    ports:
+      - 6379:6379
+    command: redis-server /usr/local/etc/redis/redis.conf
+  redis70:
+    image: redis:7.0.4-bullseye
+    volumes:
+      - ./services/redis70/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./data/redis70/:/data/:rw
+    ports:
+      - 6380:6379
+    command: redis-server /usr/local/etc/redis/redis.conf
 
 

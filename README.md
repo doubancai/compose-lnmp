@@ -90,5 +90,59 @@ docker-compose up
 
 127.0.0.1
 
+## Redis62
+
+1.拷贝容器内配置文件到宿主机
+
+```bash
+mkdir ./services/redis62/
+```
+
+2.从GitHub下载对应版本的包,解压后将 redis.conf 拷贝到./services/redis/
+
+```bash
+wget -P /tmp https://github.com/redis/redis/archive/refs/tags/6.2.7.zip
+unzip /tmp/6.2.7.zip -d /tmp
+cp /tmp/redis-6.2.7/redis.conf ./services/redis62/
+rm -rf /tmp/6.2.7.zip /tmp/redis-6.2.7
+```
+
+3.启动容器
+
+```bash
+docker-compose up
+```
+
+4.浏览器中访问
+
+127.0.0.1
+
+## Redis70
+
+1.拷贝容器内配置文件到宿主机
+
+```bash
+mkdir ./services/redis70/
+```
+
+2.从GitHub下载对应版本的包,解压后将 redis.conf 拷贝到./services/redis/
+
+```bash
+wget -P /tmp https://github.com/redis/redis/archive/refs/tags/7.0.4.zip
+unzip /tmp/7.0.4.zip -d /tmp
+cp /tmp/redis-7.0.4/redis.conf ./services/redis70/
+rm -rf /tmp/7.0.4.zip /tmp/redis-7.0.4
+```
+
+3.启动容器
+
+```bash
+docker-compose up
+```
+
+4.浏览器中访问
+
+127.0.0.1
+
 
 
