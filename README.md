@@ -174,5 +174,26 @@ docker-compose up
 
 需要将data/mongo目录清空重启mongo容器
 
+## OpenResty121
+
+1.拷贝容器内配置文件到宿主机
+
+```bash
+docker run -it --rm --name temp-openresty openresty/openresty:1.21.4.1-3-focal /bin/bash
+mkdir -p ./services/openresty121
+docker cp temp-openresty:/usr/local/openresty/nginx/conf/nginx.conf ./services/openresty121/
+docker cp temp-openresty:/etc/nginx/conf.d/ ./services/openresty121/conf.d/
+```
+
+2.启动容器
+
+```bash
+docker-compose up
+```
+
+3.浏览器中访问
+
+127.0.0.1:8080
+
 
 

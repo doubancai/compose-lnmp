@@ -71,5 +71,15 @@ services:
       MONGO_INITDB_ROOT_USERNAME: "admin"
       MONGO_INITDB_ROOT_PASSWORD: "auth123"
     command: --auth
+  openresty121:
+    build:
+      context: ./services/openresty121
+    volumes:
+      - ./services/openresty121/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./services/openresty121/conf.d/:/etc/nginx/conf.d/
+      - ./logs/openresty121/:/usr/local/openresty/nginx/logs/
+      - ./www/:/var/www/
+    ports:
+      - 8080:80
 
 
