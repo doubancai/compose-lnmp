@@ -11,6 +11,7 @@ services:
       - 80:80
     depends_on:
       - php74
+      - php81
     environment:
       - TZ=Asia/Shanghai
   php74:
@@ -23,5 +24,13 @@ services:
       - ./www/:/var/www/
     environment:
       - TZ=Asia/Shanghai
+  php81:
+    build:
+      context: ./services/php81
+    volumes:
+      - ./services/php81/php.ini:/usr/local/etc/php/php.ini
+      - ./services/php81/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      - ./logs/php81/:/var/log/php/
+      - ./www/:/var/www/
 
 
