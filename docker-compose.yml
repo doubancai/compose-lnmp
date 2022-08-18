@@ -81,5 +81,22 @@ services:
       - ./www/:/var/www/
     ports:
       - 8080:80
+  redis-cluster:
+    image: redis:6.2.7-bullseye
+    volumes:
+      - ./services/redis-cluster/:/usr/local/etc/redis/
+      - ./data/redis-cluster/:/data/
+    ports:
+      - 7001-7003:7001-7003
+      - 17001-17003:17001-17003
+    command: 
+      - /bin/bash
+      - -c
+      - |
+        redis-server /usr/local/etc/redis/7001/redis.conf &
+        redis-server /usr/local/etc/redis/7002/redis.conf &
+        redis-server /usr/local/etc/redis/7003/redis.conf
+    environment:
+      - TZ=Asia/Shanghai
 
 

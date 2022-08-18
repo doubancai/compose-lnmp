@@ -195,5 +195,82 @@ docker-compose up
 
 127.0.0.1:8080
 
+## Redis Cluster
+
+批量生成配置文件
+
+```bash
+bash redis-cluster-config.sh
+```
+
+启动容器
+
+```bash
+docker-compose up
+```
+
+进入容器
+
+```bash
+docker exec -it compose-lnmp-redis-cluster-1 /bin/bash
+```
+
+初始化集群(三主零副本)
+
+```bash
+redis-cli -p 7001 -a auth123 --cluster create 192.168.1.222:7001 192.168.1.222:7002 192.168.1.222:7003 --cluster-replicas 0
+
+# 输出
+>>> Performing hash slots allocation on 3 nodes...
+Master[0] -> Slots 0 - 5460
+Master[1] -> Slots 5461 - 10922
+Master[2] -> Slots 10923 - 16383
+M: 31de756725d1b191c53b983b39b15e117c5f4c93 192.168.1.222:7001
+   slots:[0-5460] (5461 slots) master
+M: 49470ddb375c4361423a80d55a711a422a223bfc 192.168.1.222:7002
+   slots:[5461-10922] (5462 slots) master
+M: 3809b2e1ceaa6451a511b35c4aba05957babf330 192.168.1.222:7003
+   slots:[10923-16383] (5461 slots) master
+Can I set the above configuration? (type 'yes' to accept): yes
+>>> Nodes configuration updated
+>>> Assign a different config epoch to each node
+>>> Sending CLUSTER MEET messages to join the cluster
+Waiting for the cluster to join
+...
+>>> Performing Cluster Check (using node 192.168.1.222:7001)
+M: 31de756725d1b191c53b983b39b15e117c5f4c93 192.168.1.222:7001
+   slots:[0-5460] (5461 slots) master
+M: 3809b2e1ceaa6451a511b35c4aba05957babf330 192.168.1.222:7003
+   slots:[10923-16383] (5461 slots) master
+M: 49470ddb375c4361423a80d55a711a422a223bfc 192.168.1.222:7002
+   slots:[5461-10922] (5462 slots) master
+[OK] All nodes agree about slots configuration.
+>>> Check for open slots...
+>>> Check slots coverage...
+[OK] All 16384 slots covered.
+```
+
+进入redis
+
+```bash
+redis-cli -c  -p 7001 -a auth123
+```
+
+查看节点
+
+```bash
+127.0.0.1:7001> cluster nodes
+de4ffd1d949c11c0178c508defa604398927e133 192.168.1.222:7004@17004 slave 3e7f37caba391ab13696f042299fee2bab0ce3e0 0 1660791650000 2 connected
+d1c6a6b929588e5e8cfbc93dbc50e750d2393ac9 192.168.1.222:7006@17006 slave c591e58ef2cf313f316383d810b16d222db16525 0 1660791648407 1 connected
+c591e58ef2cf313f316383d810b16d222db16525 192.168.1.222:7001@17001 myself,master - 0 1660791649000 1 connected 0-5460
+0a1ba1911141b6311edbb89b8091e4b321971d8d 192.168.1.222:7003@17003 master - 0 1660791649000 3 connected 10923-16383
+2fa8912cfd335b7952f37b3898c56e77d3f653d1 192.168.1.222:7005@17005 slave 0a1ba1911141b6311edbb89b8091e4b321971d8d 0 1660791649449 3 connected
+3e7f37caba391ab13696f042299fee2bab0ce3e0 192.168.1.222:7002@17002 master - 0 1660791650467 2 connected 5461-10922
+```
+
+连接测试，浏览器中访问
+
+127.0.0.1
+
 
 

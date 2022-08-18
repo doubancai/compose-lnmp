@@ -41,4 +41,14 @@ foreach ($cursor as $document) {
     print_r($document);
 }
 
+echo "<p>";
+$obj_cluster = new RedisCluster(NULL, ['redis-cluster:7001', 'redis-cluster:7002', 'redis-cluster:7003'], 1.5, 1.5, true, "auth123");
+var_dump($obj_cluster);
+$obj_cluster->set("aa", "1");
+$obj_cluster->set("bb", "2");
+$arr = [];
+$arr[] = $obj_cluster->get("aa");
+$arr[] = $obj_cluster->get("bb");
+var_dump($arr);
+
 
