@@ -67,5 +67,28 @@ docker-compose up
 
 127.0.0.1
 
+## MySQL80
+
+1.拷贝容器内配置文件到宿主机
+
+```bash
+docker run -itd --rm --name temp-mysql -e MYSQL_ROOT_PASSWORD=root mysql:8.0.30
+# 进入容器
+# docker exec -it temp-mysql /bin/bash
+mkdir ./services/mysql80/
+docker cp temp-mysql:/etc/my.cnf ./services/mysql80/
+docker stop temp-mysql
+```
+
+2.启动容器
+
+```bash
+docker-compose up
+```
+
+3.浏览器中访问
+
+127.0.0.1
+
 
 

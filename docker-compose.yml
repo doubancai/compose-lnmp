@@ -32,5 +32,17 @@ services:
       - ./services/php81/php-fpm.conf:/usr/local/etc/php-fpm.conf
       - ./logs/php81/:/var/log/php/
       - ./www/:/var/www/
+  mysql80:
+    image: mysql:8.0.30
+    volumes:
+      - ./services/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./data/mysql80/:/var/lib/mysql/:rw
+    ports:
+      - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    security_opt:
+      - seccomp:unconfined
 
 
